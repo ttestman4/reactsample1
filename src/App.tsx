@@ -4,13 +4,14 @@ import './App.scss';
 import { connect } from 'react-redux';
 
 import { AppState } from './store';
-import { UserState } from './store/user/types';
-import { initUser } from './store/user/actions';
+import { UserState } from './user/store/types';
+import { initUser, fetchUser } from './user/store/actions';
 
-import UserCompInterface from './components/user';
+import UserCompInterface from './user/components/user';
 
 interface AppProp {
   initUser: typeof initUser;
+  fetchUser: typeof fetchUser;
   userState: UserState;
 }
 
@@ -31,28 +32,18 @@ class App extends Component<AppProp> {
     });
   };
 
+  fetchUser = () => {
+    this.props.fetchUser();
+  };
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <p />
-        </header>
         <UserCompInterface
           name={this.state.name}
           initUser={this.init}
           updateUser={this.updateUser}
+          fetchUser={this.fetchUser}
         />
       </div>
     );
@@ -63,7 +54,7 @@ const mapStateToProps = (state: AppState) => ({
   userState: state.user
 });
 
-const mapDispatchToProps = { initUser };
+const mapDispatchToProps = { initUser, fetchUser };
 
 export default connect(
   mapStateToProps,

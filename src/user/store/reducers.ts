@@ -1,4 +1,9 @@
-import { INIT_USER, UserState, UserActionTypes } from './types';
+import {
+  INIT_USER,
+  UserState,
+  UserActionTypes,
+  FETCH_USER_SUCCESS
+} from './types';
 
 const initialState: UserState = {
   name: 'User State'
@@ -10,6 +15,12 @@ export function userReducer(
 ): UserState {
   switch (action.type) {
     case INIT_USER: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case FETCH_USER_SUCCESS: {
       return {
         ...state,
         ...action.payload
